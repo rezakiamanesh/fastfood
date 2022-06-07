@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateProductsTable extends Migration
+class CreateCommentsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,17 @@ class CreateProductsTable extends Migration
      */
     public function up()
     {
-        Schema::create('products', function (Blueprint $table) {
+        Schema::create('comments', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            $table->string('title');
-            $table->string('slug');
-            $table->longText('description');
-            $table->string('price');
-            $table->integer('stock')->default(0);
+            $table->integer('parent_id')->unsigned()->default(0);
+            $table->longText('comment');
+            $table->morphs('commentable');
+//            $table->unsignedBigInteger('commentable_id');
+//            $table->string('commentable_type');
+            $table->string('ip')->nullable();
             $table->boolean('status')->default(0);
-            $table->bigInteger('viewCount')->default(0);
-            $table->bigInteger('commentCount')->default(0);
-            $table->bigInteger('soldCount')->default(0);
             $table->softDeletes();
             $table->timestamps();
         });
@@ -38,6 +36,6 @@ class CreateProductsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('comments');
     }
 }
