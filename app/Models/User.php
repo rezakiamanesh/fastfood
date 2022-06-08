@@ -11,7 +11,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+
+    const ADMIN = 1, USER = 2;
 
     /**
      * The attributes that are mass assignable.
@@ -21,6 +23,8 @@ class User extends Authenticatable
     protected $fillable = [
         'name',
         'email',
+        'mobile',
+        'level',
         'password',
     ];
 
@@ -46,6 +50,10 @@ class User extends Authenticatable
 
     protected $dates = ['deleted_at'];
 
+    public function isAdmin()
+    {
+        return auth()->user()->level == User::ADMIN ? true : false;
+    }
 
     public function address()
     {
