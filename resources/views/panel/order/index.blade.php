@@ -69,7 +69,6 @@
                         </div>
                     </div>
                     <hr>
-                    @if(in_array(auth()->user()->level  , [\App\Utility\Level::ADMIN , \App\Utility\Level::SUPER_ADMIN ,  \App\Utility\Level::OPERATOR]))
                         <div class="col-lg-12">
                             <section class="panel">
                                 <div class="panel-body">
@@ -137,7 +136,6 @@
                                 </div>
                             </section>
                         </div>
-                    @endif
                 </div>
             </div>
         </div>

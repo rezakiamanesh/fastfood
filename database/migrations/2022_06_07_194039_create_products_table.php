@@ -21,7 +21,8 @@ class CreateProductsTable extends Migration
             $table->string('slug');
             $table->longText('description');
             $table->string('price');
-            $table->integer('stock')->default(0);
+            $table->integer('stock')->default(0)->comment("موجودی");
+            $table->string('time_to_prepare')->default(15)->comment('مدت زمان برای آماده شدن');
             $table->boolean('status')->default(0);
             $table->bigInteger('viewCount')->default(0);
             $table->bigInteger('commentCount')->default(0);

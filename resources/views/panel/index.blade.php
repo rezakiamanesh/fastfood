@@ -28,10 +28,8 @@
         </div>
     </div>
 
-    @if (auth()->user()->isSuperAdmin() || auth()->user()->isAdmin())
+    @if (auth()->user()->isAdmin())
         <div class="row">
-            @include('generals.sessionMessage')
-            @include('generals.allErrors')
             {{-- Start Of count all users--}}
             <div class="col-lg-3 col-sm-6">
                 <div class="support-box text-center bg-blue">
@@ -60,77 +58,27 @@
             </div>
             {{-- End Of count all category--}}
 
-            {{-- all job --}}
             <div class="col-lg-3 col-sm-6">
                 <div class="support-box text-center bg-cyan">
                     <div class="icon m-b-10">
                     </div>
-                    <div class="text m-b-10"> مشاغل </div>
-                    <h3 class="m-b-0"> {{ isset($countJob) ? $countJob : 0  }}
+                    <div class="text m-b-10"> محصولات </div>
+                    <h3 class="m-b-0"> {{ isset($countProducts) ? $countProducts : 0  }}
                         <i class="material-icons">today</i>
                     </h3>
-                    <small class="displayblock">تعداد کل  مشاغل</small>
+                    <small class="displayblock">تعداد کل  محصولات</small>
                 </div>
             </div>
 
-            {{-- Count news --}}
             <div class="col-lg-3 col-sm-6">
                 <div class="support-box text-center bg-danger">
                     <div class="icon m-b-10">
                     </div>
-                    <div class="text m-b-10">اخبار</div>
-                    <h3 class="m-b-0">{{ isset($countNews) ? $countNews : 0  }}
+                    <div class="text m-b-10">سفارشات</div>
+                    <h3 class="m-b-0">{{ isset($countOrders) ? $countOrders : 0  }}
                         <i class="material-icons">rss_feed</i>
                     </h3>
-                    <small class="displayblock">تعداد کل اخبار</small>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6">
-                <div class="support-box text-center bg-dark-gray">
-                    <div class="icon m-b-10">
-                    </div>
-                    <div class="text m-b-10">آگهی</div>
-                    <h3 class="m-b-0">{{ isset($countAdvertisment) ? $countAdvertisment : 0  }}
-                        <i class="material-icons">location_city</i>
-                    </h3>
-                    <small class="displayblock">تعداد کل آگهی</small>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6">
-                <div class="support-box text-center bg-amber">
-                    <div class="icon m-b-10">
-                    </div>
-                    <div class="text m-b-10">رویداد</div>
-                    <h3 class="m-b-0">{{ isset($countEvent) ? $countEvent : 0  }}
-                        <i class="material-icons">date_range</i>
-                    </h3>
-                    <small class="displayblock">تعداد کل رویداد</small>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6">
-                <div class="support-box text-center bg-purple">
-                    <div class="icon m-b-10">
-                    </div>
-                    <div class="text m-b-10">مسابقات</div>
-                    <h3 class="m-b-0">{{ isset($countCompetition) ? $countCompetition : 0  }}
-                        <i class="material-icons">people</i>
-                    </h3>
-                    <small class="displayblock">تعداد کل مسابقات</small>
-                </div>
-            </div>
-
-            <div class="col-lg-3 col-sm-6">
-                <div class="support-box text-center bg-green">
-                    <div class="icon m-b-10">
-                    </div>
-                    <div class="text m-b-10">ویدیو</div>
-                    <h3 class="m-b-0">{{ isset($countVideo) ? $countVideo : 0  }}
-                        <i class="material-icons">local_movies</i>
-                    </h3>
-                    <small class="displayblock">تعداد کل ویدیو</small>
+                    <small class="displayblock">تعداد کل سفارشات</small>
                 </div>
             </div>
 
@@ -170,14 +118,6 @@
     </div>
 
 
-
-    {{-- log viewer --}}
-    <!--state overview end-->
-    @if (auth()->user()->isSuperAdmin())
-        <a href="{{ url('log-viewer') }}" target="_blank"><h1
-                    class="page-header h-panel-log">@lang('cms.error-reporting')</h1></a>
-
-    @endif
 
 
 @endsection

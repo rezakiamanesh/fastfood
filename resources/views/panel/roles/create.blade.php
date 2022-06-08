@@ -56,8 +56,7 @@
                     </ul>
                 </div>
                 <div class="body">
-                    @include('generals.allErrors')
-                    @include('generals.sessionMessage')
+
                     <br>
 
                     @if (isset($find) && !empty($find) && !is_null($find))

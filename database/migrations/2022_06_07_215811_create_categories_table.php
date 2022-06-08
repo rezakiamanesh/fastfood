@@ -26,6 +26,14 @@ class CreateCategoriesTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+        Schema::create('categorizables', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('category_id');
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->morphs('categorizable');
+            $table->softDeletes();
+            $table->timestamps();
+        });
     }
 
     /**
@@ -36,5 +44,7 @@ class CreateCategoriesTable extends Migration
     public function down()
     {
         Schema::dropIfExists('categories');
+        Schema::dropIfExists('categorizables');
+
     }
 }

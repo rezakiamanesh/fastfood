@@ -1,5 +1,5 @@
-@extends('site.layout.master')
-@section('site.css')
+@extends('layouts.master')
+@section('site-css')
     @include('users.layouts.partials.styles')
 @endsection
 

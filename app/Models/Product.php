@@ -2,6 +2,8 @@
 
 namespace App\Models;
 
+use App\Traits\HasCategory;
+use App\Traits\HasComment;
 use App\Traits\HasImage;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -10,9 +12,9 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
-    use HasFactory, HasImage, Sluggable,SoftDeletes;
+    use HasFactory, HasImage, Sluggable,SoftDeletes,HasCategory,HasComment;
 
-    protected $fillable = ['user_id','title','slug','description','price','stock','status','viewCount','commentCount','soldCount'];
+    protected $fillable = ['user_id','title','slug','description','price','stock','status','viewCount','commentCount','soldCount','time_to_prepare'];
     protected $dates = ['deleted_at'];
 
     public function sluggable()
@@ -22,6 +24,18 @@ class Product extends Model
                 'source' => 'title'
             ]
         ];
+    }
+    public static function boot()
+    {
+        parent::boot();
+        static::deleting(function ($product) {
+            $product->comments()->delete();
+            $product->image()->delete();
+        });
+    }
+    public function path()
+    {
+        return 'product/'.$this->slug;
     }
 
     public function user()

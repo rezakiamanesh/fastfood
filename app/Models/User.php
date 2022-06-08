@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Category;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
@@ -63,5 +64,23 @@ class User extends Authenticatable
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class);
+    }
+
+    public function categories()
+    {
+        return $this->hasMany(Category::class);
+    }
+
+    public function hasRole($role)
+    {
+        if (is_string($role)) {
+            return $this->roles->contains('name', $role);
+        }
+        return !!$role->intersect($this->roles)->count();
     }
 }

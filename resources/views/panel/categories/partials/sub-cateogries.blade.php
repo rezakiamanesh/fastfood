@@ -4,12 +4,6 @@
             <li class="dd-item list-group-item" data-id="{{ $subCategory->id }}" style="text-align: left">
                 <div class="dd-handle">{{ $subCategory->title }}</div>
                 <div class="dd-option-handle">
-                    @if($subCategory->isAttributable())
-                        <a href="{{ route('panel.category.attributedForm',$subCategory->id) }}" title="انتخاب ویژگی ها"
-                           class="btn btn-primary btn-circle waves-effect waves-circle waves-float">
-                            <i class="material-icons">spellcheck</i>
-                        </a>
-                    @endif
 
                     @can('panel.category.update')
                         <a href="{{ route('panel.category.edit',$subCategory->id) }}"

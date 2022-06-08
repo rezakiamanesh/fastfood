@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['auth:web'], 'prefix' => 'panel'], function () {
-    Route::group(['middleware' => ['isUser'], 'namespace' => 'Users', 'prefix' => 'users'], function () {
+    Route::group(['middleware' => ['isUser'], 'prefix' => 'users'], function () {
 
 
         Route::get('/', 'HomeController@index')->name('users.dashboard.index');

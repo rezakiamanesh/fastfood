@@ -60,7 +60,7 @@
                                 @foreach($users as $val)
                                     <tr>
                                         <td> {{ $loop->iteration  }} </td>
-                                        <td><a target="_blank">{{ $val->fullName }} </a>
+                                        <td><a target="_blank">{{ $val->name }} </a>
                                         </td>
                                         <td>
                                             <a href="{{ route('panel.users.active' , ['id' => $val->id])  }}">
@@ -181,7 +181,7 @@
                                                     <p> موبایل : <span> {{ $val->mobile  }} </span></p>
 
                                                     <p> نقش کاربری :
-                                                        <span> {{ \App\Utility\Level::getLevel($val->level) }} </span>
+                                                        <span> {{ $val->level }} </span>
                                                     </p>
                                                     <p> تاریخ عضویت : <span> {{ $val->created_at }} </span></p>
 

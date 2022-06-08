@@ -41,7 +41,7 @@ class Category extends Model
         return $this->belongsTo(__CLASS__, 'parent_id');
     }
 
-    public function subCategory()
+    public function categories()
     {
         return $this->hasMany(__CLASS__, 'parent_id')->orderBy('sorting', 'ASC');
     }

@@ -11,7 +11,7 @@
                                                     <span class="input-group-btn">
                                                     <a id="lfm1" data-input="thumbnail3" data-preview="holder2"
                                                        class="btn btn-primary">
-                                                      <i class="fa fa-picture-o"></i> @lang('cms.choose')
+                                                      <i class="fa fa-picture-o"></i> انتخاب
                                                     </a>
                                                   </span>
                 <input id="thumbnail3" class="form-control" type="text"

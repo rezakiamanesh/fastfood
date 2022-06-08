@@ -15,19 +15,13 @@ use Illuminate\Support\Facades\Route;
 
 Route::group(['namespace' => '\App\Http\Controllers\site'], function () {
     Route::get('/','SiteController@index')->name('site.index');
+    Route::get('/product/{slug?}','SiteController@product')->name('site.product');
+    Route::post('/save-comment/{id}','SiteController@commentStore')->name('site.comment.store');
 
 });
 
 Auth::routes();
+Route::group(['namespace' => '\App\Http\Controllers\Auth'], function () {
+Route::get('/logout','LoginController@logout')->name('logout');
+});
 
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
-Auth::routes();
-
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

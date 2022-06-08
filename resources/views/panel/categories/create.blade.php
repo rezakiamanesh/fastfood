@@ -279,8 +279,7 @@
                                                                     onchange="getCategories()">
                                                                 <option value="">بخش مربوطه را انتخاب نمایید</option>
                                                                 @foreach(\App\Utility\CategoryType::types() as $model => $modelTitle)
-                                                                    <option
-                                                                            value="{{ $model }}" {{ isset($find) && $find->type == $model? 'selected' : null }}>{{ $modelTitle }}</option>
+                                                                    <option value="{{ $model }}" {{ isset($find) && $find->type == $model ? 'selected' : null }}>{{ $modelTitle }}</option>
                                                                 @endforeach
                                                             </select>
                                                         </div>
@@ -308,18 +307,6 @@
                                             </div>
 
 
-                                            <div class="row clearfix">
-                                                <div class="col-lg-2 col-md-2 col-sm-4 col-xs-5 form-control-label">
-                                                    <label for="status">دارای ویژگی؟</label>
-                                                </div>
-                                                <div class="demo-switch">
-                                                    <div class="switch">
-                                                        <label>بله
-                                                            <input name="is-attribute" type="checkbox" @if(isset($find) && !empty($find) && $find->isAttributable()) checked @endif>
-                                                            <span class="lever"></span>خیر</label>
-                                                    </div>
-                                                </div>
-                                            </div>
 
                                             {{-- status --}}
                                             <div class="row clearfix">

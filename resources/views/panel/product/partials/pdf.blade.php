@@ -68,24 +68,3 @@
 
 <br><br>
 
-@if (isset($findIdProducts) && !empty($findIdProducts) && !is_null($findIdProducts))
-    @can('panel.product.update')
-        {{-- button edit --}}
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-7 ">
-                <button type="submit" class="btn-hover color-4 pull-left">ویرایش
-                </button>
-            </div>
-        </div>
-    @endcan
-@else
-    @can('panel.product.store')
-        {{-- button save --}}
-        <div class="row clearfix">
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-7 ">
-                <button type="submit" class="btn-hover color-1 pull-left">ذخیره
-                </button>
-            </div>
-        </div>
-    @endcan
-@endif

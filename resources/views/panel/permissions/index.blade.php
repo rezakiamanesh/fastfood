@@ -23,7 +23,7 @@
                             <a href="{{ route('panel.permission.create')  }}"
                                class="btn btn-outline-default btn-border-radius"> سطوح دسترسی جدید </a>
                         @endcan
-                        @if (auth()->user()->isSuperAdmin())
+                        @if (auth()->user()->isAdmin())
                             <a href="{{ route('panel.permission.updateToDate')  }}"
                                class="btn btn-outline-danger btn-border-radius"> بروز رسانی سطوح دسترسی
                                 <span class="badge bg-orange"> {{ isset($permissionCount) && isset($countNewRoute) ?  $countNewRoute -  $permissionCount : 0  }} </span>

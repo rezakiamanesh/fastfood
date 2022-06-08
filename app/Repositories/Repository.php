@@ -71,6 +71,11 @@ class Repository implements RepositoryInterface
         return $this->model->find($id);
     }
 
+    public function first($condition)
+    {
+        return $this->model->where($condition)->first();
+    }
+
     public function showOwner($id)
     {
         return $this->model->owner()->find($id);

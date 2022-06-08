@@ -66,9 +66,9 @@
                         <div class="row">
                             <div class="col-md-12 dd" id="nestable-wrapper">
                                 <ol class="dd-list list-group">
-                                    @php
-                                        \App\Model\Category::$preventAttrSet = true;
-                                    @endphp
+{{--                                    @php--}}
+{{--                                        \App\Models\Category::$preventAttrSet = true;--}}
+{{--                                    @endphp--}}
                                     @foreach($categories->groupBy('type') as $group)
                                         <h3>{{ $group[0]->type ?? '' }}</h3>
                                         @foreach($group as $k => $category)
@@ -76,14 +76,6 @@
                                                 style="text-align: left">
                                                 <div class="dd-handle">{{ $category->title }}</div>
                                                 <div class="dd-option-handle">
-                                                    @if($category->isAttributable())
-                                                        <a href="{{ route('panel.category.attributedForm',$category->id) }}"
-                                                           title="انتخاب ویژگی ها"
-                                                           class="btn btn-primary btn-circle waves-effect waves-circle waves-float">
-                                                            <i class="material-icons">spellcheck</i>
-                                                        </a>
-                                                    @endif
-
                                                     @can('panel.category.update')
                                                         <a href="{{ route('panel.category.edit',$category->id) }}"
                                                            class="btn btn-warning btn-circle waves-effect waves-circle waves-float">

@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('site.layouts.master')
 
 @section('content')
     <section id="mainSlider" class="container-fluid p-0">
@@ -94,12 +94,7 @@
                     <div class="board">
                         <div class="board-inner">
                             <ul class="nav nav-tabs" id="myTab">
-                                <li>
-                                    <a class="active " href="#tab1" data-toggle="tab"
-                                       title="سینی های تکی" aria-expanded="true">
-                                        <p class="name-tab">سینی های تکی</p>
-                                    </a>
-                                </li>
+
                             </ul>
                         </div>
                         <div class="tab-content mt-5">
@@ -107,153 +102,47 @@
                                 <div class="row">
                                     <div class="col-12 p-0">
                                         <div class="ul-tab ">
-                                            <li>
-                                                <a href="https://foodbamaze.com/public/index.php/products/لازانیا-گوشت-و-قارچ"
-                                                   class="thumbnail productcard">
-                                                    <div class="row img-box">
-                                                        <div class="col-12 p-0">
-                                                            <img
-                                                                src="https://foodbamaze.com/public/storage/images/products/2020/12/VRTbGVLEPgmC5DS9QxgGa7DIVCJu3HUU2no5pCf7kdBF2FIpJejlZcMfcEyye4bL-223x223.jpeg"
-                                                                width="223" height="223"
-                                                                style="    border-radius: 50%;" class="img-fluid">
+                                            @foreach($products as $product)
+                                                <li>
+                                                    <a href="{{ $product->path() }}"
+                                                       class="thumbnail productcard">
+                                                        <div class="row img-box">
+                                                            <div class="col-12 p-0">
+                                                                @if(isset($product->image[0]) && !empty($product->image[0]))
+                                                                    <img
+                                                                        src="{{ $product->image[0]->url }}"
+                                                                        width="223" height="223" alt="{{ $product->title }}"
+                                                                        style="    border-radius: 50%;"
+                                                                        class="img-fluid">
+                                                                @endif
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-12 p-2 text-center">
-                                                            <span class="pro-name">لازانیا گوشت و قارچ</span>
-                                                        </div>
-                                                        <div class="col-md-12 col-12 p-2 text-center">
+                                                        <div class="row">
+                                                            <div class="col-md-12 col-12 p-2 text-center">
+                                                                <span class="pro-name">{{ $product->title }}</span>
+                                                            </div>
+                                                            <div class="col-md-12 col-12 p-2 text-center">
                                                                 <span class="cost-pro">
-                                                                    <span class="v-cost">405,000</span>
+                                                                    <span class="v-cost">{{ number_format($product->price) }}</span>
                                                                     <span class="u-cost">تومان</span>
                                                                 </span>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-12 text-center">
-                                                            <div class="order-btn">
+                                                        <div class="row">
+                                                            <div class="col-12 text-center">
+                                                                <div class="order-btn">
                                                                  <span class="order"
-                                                                       onclick="location.href='https://foodbamaze.com/public/index.php/products/لازانیا-گوشت-و-قارچ'">
+                                                                       onclick="location.href='{{ $product->path() }}'">
                                                                           <i class="fas fa-plus-circle"></i>
                                                                           سفارش دهید
                                                                     </span>
+                                                                </div>
                                                             </div>
                                                         </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://foodbamaze.com/public/index.php/products/کیک-مرغ"
-                                                   class="thumbnail productcard">
-                                                    <div class="row img-box">
-                                                        <div class="col-12 p-0">
-                                                            <img
-                                                                src="https://foodbamaze.com/public/storage/images/products/2020/12/9sBzKIamgH1jfK9mwNhHL9jhiActjqzHy8MhiBs5PWXk24gM3PjE1FMJcgi70OQm-223x223.jpeg"
-                                                                width="223" height="223"
-                                                                style="    border-radius: 50%;" class="img-fluid">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-12 p-2 text-center">
-                                                            <span class="pro-name">کیک مرغ</span>
-                                                        </div>
-                                                        <div class="col-md-12 col-12 p-2 text-center">
-                                                                <span class="cost-pro">
-                                                                    <span class="v-cost">300,000</span>
-                                                                    <span class="u-cost">تومان</span>
-                                                                </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-12 text-center">
-                                                            <div class="order-btn">
-                                                                 <span class="order"
-                                                                       onclick="location.href='https://foodbamaze.com/public/index.php/products/کیک-مرغ'">
-                                                                          <i class="fas fa-plus-circle"></i>
-                                                                          سفارش دهید
-                                                                    </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://foodbamaze.com/public/index.php/products/کروسان-ژامبون-و-پنیر"
-                                                   class="thumbnail productcard">
-                                                    <div class="row img-box">
-                                                        <div class="col-12 p-0">
-                                                            <img
-                                                                src="https://foodbamaze.com/public/storage/images/products/2020/12/YYbbaMvtNjAjVjedwHeLAIfGvEwcsXnLwJtseqzS7eUpQzRisqT9dc8cyoGO4f5D-223x223.jpeg"
-                                                                width="223" height="223"
-                                                                style="    border-radius: 50%;" class="img-fluid">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-12 p-2 text-center">
-                                                            <span class="pro-name">کروسان ژامبون و پنیر</span>
-                                                        </div>
-                                                        <div class="col-md-12 col-12 p-2 text-center">
-                                                                <span class="cost-pro">
-                                                                    <span class="v-cost">270,000</span>
-                                                                    <span class="u-cost">تومان</span>
-                                                                </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-12 text-center">
-                                                            <div class="order-btn">
-                                                                 <span class="order"
-                                                                       onclick="location.href='https://foodbamaze.com/public/index.php/products/کروسان-ژامبون-و-پنیر'">
-                                                                          <i class="fas fa-plus-circle"></i>
-                                                                          سفارش دهید
-                                                                    </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </li>
-                                            <li>
-                                                <a href="https://foodbamaze.com/public/index.php/products/دلمه-برگ-مو"
-                                                   class="thumbnail productcard">
-                                                    <div class="row img-box">
-                                                        <div class="col-12 p-0">
-                                                            <img
-                                                                src="https://foodbamaze.com/public/storage/images/products/2020/12/0TOWW3lGmogKIgxDHbiclaNwFfD2S0YVuXz7ulJ8jW5HashyGilJ3DDoZnMhVT1B-223x223.jpeg"
-                                                                width="223" height="223"
-                                                                style="    border-radius: 50%;" class="img-fluid">
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-md-12 col-12 p-2 text-center">
-                                                            <span class="pro-name">دلمه برگ مو</span>
-                                                        </div>
-                                                        <div class="col-md-12 col-12 p-2 text-center">
-                                                                <span class="cost-pro">
-                                                                    <span class="v-cost">285,000</span>
-                                                                    <span class="u-cost">تومان</span>
-                                                                </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="row">
-                                                        <div class="col-12 text-center">
-                                                            <div class="order-btn">
-                                                                 <span class="order"
-                                                                       onclick="location.href='https://foodbamaze.com/public/index.php/products/دلمه-برگ-مو'">
-                                                                          <i class="fas fa-plus-circle"></i>
-                                                                          سفارش دهید
-                                                                    </span>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </a>
-                                            </li>
+                                                    </a>
+                                                </li>
+                                            @endforeach
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="col-12 p-0 text-center mt-5">
-                                        <a href="/categories/سینی-های-تکی" class="more-product">مشاهده بیشتر
-                                            محصولات</a>
                                     </div>
                                 </div>
                             </div>
