@@ -94,6 +94,8 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     @include('sweetalert::alert')
     @yield('site-css')
+    @livewireStyles
+
 </head>
 
 <body class="">
@@ -142,6 +144,7 @@
     </div>
 </div>
 @yield('site-js')
+
 <script>
     var myVar;
 
@@ -164,5 +167,7 @@
     <h1>بامزه</h1>
     <h2>بامزه</h2>
 </div>
+@livewireScripts
+
 </body>
 </html>
