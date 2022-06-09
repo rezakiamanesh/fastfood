@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\admin;
 
+use App\Http\Requests\CategoryRequest;
 use App\Models\Category;
 use App\Repositories\Repository;
 use App\Services\ImageServices\ImageServices;
@@ -38,28 +39,15 @@ class CategoryController extends Controller
         return view("panel.categories.create", compact('title'));
     }
 
-    public function store(Request $request)
+    public function store(CategoryRequest $categoryRequest)
     {
-        $title = $request->input('title');
-        $status = $request->input('status');
-        $type = $request->input('modelName');
-        $parent_id = $request->input('parent_id');
-        $images = $request->input('filepath');
-
-
-        $this->validate($request, [
-            'title' => 'required|max:180',
-            'modelName' => 'required',
-            'status' => 'required|integer|between:0,1,2',
+        $images = $categoryRequest->input('filepath');
+        $saveData = $this->user->categories()->create([
+            'title' => $categoryRequest->input('title'),
+            'parent_id' => $categoryRequest->input('parent_id'),
+            'type' =>  $categoryRequest->input('modelName'),
+            'status' =>  $categoryRequest->input('status')
         ]);
-
-        $requestData = [
-            'title' => $title,
-            'parent_id' => $parent_id,
-            'type' => $type,
-            'status' => $status
-        ];
-        $saveData = $this->user->categories()->create($requestData);
         DB::beginTransaction();
         if ($saveData instanceof Category) {
             DB::commit();
@@ -89,82 +77,51 @@ class CategoryController extends Controller
 
     public function edit($id)
     {
-        if (is_numeric($id)) {
-            $title = "مدیریت | ویرایش دسته بندی مورد نظر";
-            $find = $this->category->show($id);
-            return view('panel.categories.create', compact('title', 'find'));
-        } else {
-            toast()->error(Message::illegalError, Lang::get('cms.error'))->showConfirmButton('بستن');
-            return redirect()->route("panel.category.index");
-        }
+        $title = "مدیریت | ویرایش دسته بندی مورد نظر";
+        $find = $this->category->show($id);
+        return view('panel.categories.create', compact('title', 'find'));
     }
 
-    public function update(Request $request, $id)
+    public function update(CategoryRequest $categoryRequest, $id)
     {
-        if (is_numeric($id)) {
-            $findCategory = $this->category->show($id);
-            $title = $request->input('title');
-            $status = $request->input('status');
-            $type = $request->input('modelName');
-            $parentId = $request->input('parent_id');
-            $images = $request->input('filepath');
+        $findCategory = $this->category->show($id);
+        $images = $categoryRequest->input('filepath');
+        $findCategory->fill([
+            'title' => $categoryRequest->input('title'),
+            'parent_id' => $categoryRequest->input('parent_id'),
+            'type' =>  $categoryRequest->input('modelName'),
+            'status' =>  $categoryRequest->input('status')
+        ]);
+        $updateData = $this->user->categories()->save($findCategory);
+        DB::beginTransaction();
+        if ($updateData) {
+            DB::commit();
+            /* start insert image */
+            if ($images && !empty($images) && count($images) > 0) {
+                /* first all delete image */
+                ImageServices::delete_images($findCategory);
 
-
-            $this->validate($request, [
-                'title' => 'required|max:180',
-                'modelName' => 'required',
-                'status' => 'required|integer',
-            ]);
-
-            $requestData = [
-                'title' => $title,
-                'parent_id' => $parentId,
-                'type' => $type,
-                'status' => $status
-            ];
-
-            $findCategory->fill($requestData);
-            $updateData = $this->user->categories()->save($findCategory);
-
-            DB::beginTransaction();
-            if ($updateData) {
-                DB::commit();
-                /* start insert image */
-                if ($images && !empty($images) && count($images) > 0) {
-                    /* first all delete image */
-                    ImageServices::delete_images($findCategory);
-
-                    foreach ($images as $item) {
-                        if ($item != null) {
-                            ImageServices::arrayCreate_images($findCategory, $item, $this->user->id);
-                        }
+                foreach ($images as $item) {
+                    if ($item != null) {
+                        ImageServices::arrayCreate_images($findCategory, $item, $this->user->id);
                     }
-                } else {
-                    ImageServices::delete_images($findCategory);
                 }
-                /* end insert image */
-                toast()->success(Message::successMessageEdit, Lang::get('cms.success'))->showConfirmButton('بستن');
-                return redirect()->route('panel.category.index');
+            } else {
+                ImageServices::delete_images($findCategory);
             }
-
-        } else {
-            toast()->error(Message::illegalError, Lang::get('cms.error'))->showConfirmButton('بستن');
+            /* end insert image */
+            toast()->success(Message::successMessageEdit, Lang::get('cms.success'))->showConfirmButton('بستن');
             return redirect()->route('panel.category.index');
         }
     }
 
     public function delete($id)
     {
-        if (is_numeric($id)) {
-            $deleteData = $this->category->delete($id);
-            DB::beginTransaction();
-            if ($deleteData) {
-                DB::commit();
-                toast()->success(Message::successMessageDelete, Lang::get('cms.success'))->showConfirmButton('بستن');
-                return back();
-            }
-        } else {
-            toast()->error(Message::illegalError, Lang::get('cms.error'))->showConfirmButton('بستن');
+        $deleteData = $this->category->delete($id);
+        DB::beginTransaction();
+        if ($deleteData) {
+            DB::commit();
+            toast()->success(Message::successMessageDelete, Lang::get('cms.success'))->showConfirmButton('بستن');
             return back();
         }
     }
@@ -174,9 +131,8 @@ class CategoryController extends Controller
         $type = $request->input('type');
         $find = $request->input('find');
         $categories = Category::whereStatus(1)->whereType($type)->get();
-
         if (isset($find) && !empty($find)) {
-            $find = Category::find($find);
+            $find = $this->category->show($find);
             $view = view('panel.categories.partials.get-other-categories', compact('categories', 'find'))->render();
         } else {
             $view = view('panel.categories.partials.get-other-categories', compact('categories'))->render();

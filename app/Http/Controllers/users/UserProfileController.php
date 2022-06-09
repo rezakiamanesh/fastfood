@@ -11,7 +11,6 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use SEO;
 
 class UserProfileController extends Controller
 {
@@ -61,7 +60,6 @@ class UserProfileController extends Controller
 
     public function ChangePwFrom()
     {
-        SEO::setTitle('ناحیه کاربری | تغییر گذرواژه');
         return view('users.change-pw');
     }
 
