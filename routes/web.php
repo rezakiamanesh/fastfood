@@ -17,6 +17,11 @@ Route::group(['namespace' => '\App\Http\Controllers\site'], function () {
     Route::get('/','SiteController@index')->name('site.index');
     Route::get('/product/{slug?}','SiteController@product')->name('site.product');
     Route::post('/save-comment/{id}','SiteController@commentStore')->name('site.comment.store');
+    Route::get('/basket','BasketController@basket')->name('site.basket')->middleware('auth');
+    Route::get('/basket/address','BasketController@address')->name('site.address')->middleware('auth');
+    Route::get('/basket/checkout','BasketController@checkout')->name('site.checkout')->middleware('auth');
+    Route::post('/basket/store','BasketController@basketStore')->name('site.basketStore')->middleware('auth');
+    Route::get('/addToCart/{id}','BasketController@addToCart')->name('site.addToBasket')->middleware('auth');
 
 });
 

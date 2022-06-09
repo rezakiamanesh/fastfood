@@ -1,10 +1,10 @@
-@extends('site.layout.master')
-@section('site.css')
+@extends('site.layouts.master')
+@section('site-css')
     @include('users.layouts.partials.styles')
 @endsection
 @section('content')
     <main class="profile-user-page default">
-        <div class="container">
+        <div class="container wrapper default">
             <div class="row">
                 <div class="profile-page col-xl-9 col-lg-8 col-md-12 order-2">
                     <div class="row">

@@ -7,8 +7,7 @@
     <title> فود با مزه
     </title>
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <meta name="csrf-token" content="ETlAvOa4PkpqsLVqVUjC8OpZ0A9TawwMYNkigGiv">
-    <link rel="canonical" href="https://foodbamaze.com/public/index.php"/>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="keywords"
           content="فود با مزه, فینگر فود, سفارش مهمانی, سفارش فینگر فود, فروشگاه اینترنتی, سفارش تولد, برگزاری تولد, راتا, راتا فینگر, پذیرایی, جلسه دفاع, دفاع, پایان نامه, جشن, فينگرفود تهران, سینی مزه, سینی چوبی, سینی میکس, سینی فینگرفود ,سینی راتا, تارت, راتا مرغ, راتا ژامبون, مینی برگر, الویه, اولویه ,غذا پرسی, غذا یک نفره ,پارتی, تولد, نامزدی, پذیرایی دفاع, برگزاری جلسه دفاع, راتامرغ, راتافینگرفود, فینگرفود لاکچری,ساندويچ, سالاد, دسر, پک پذیرایی, پک, پک دفاع, سینی سفره عقد, یلدا">
     <meta name="description"

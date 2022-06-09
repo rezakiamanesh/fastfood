@@ -1,12 +1,12 @@
-@extends('site.layout.master')
-@section('site.css')
+@extends('site.layouts.master')
+@section('site-css')
     @include('users.layouts.partials.styles')
 @endsection
 @section('title',$title)
 @section('content')
     @php
         $finish = 0;
-        $nextUrl = route('site.basket.checkout.review');
+        $nextUrl = route('site.checkout');
     @endphp
     <div class="wrapper default shopping-page">
         <main class="cart-page default">
@@ -17,35 +17,38 @@
                             <h1>انتخاب آدرس تحویل سفارش</h1>
                         </div>
                         <section class="page-content default">
-                            @if(isset($user) && isset($user->address) && !empty($user->address))
-                                @foreach($user->address as $key => $itemAddress)
-                                    <div class="address-section" >
+                            @if(isset(auth()->user()->address) && !empty(auth()->user()->address))
+                                @foreach(auth()->user()->address as $key => $itemAddress)
+                                    <div class="address-section">
                                         <label class="checkout-contact" style="width: 100%">
                                             <div class="checkout-contact-content">
                                                 <ul class="checkout-contact-items">
                                                     <li class="checkout-contact-item">
                                                         گیرنده:
                                                         <span class="full-name">{{ $itemAddress->name }}</span>
-                                                        @if(\Illuminate\Support\Facades\Auth::user()->isCustomer())
+                                                        @if(!auth()->user()->isAdmin())
                                                             <a class="checkout-contact-btn-edit">اصلاح این آدرس</a>
                                                         @endif
                                                     </li>
                                                     <li class="checkout-contact-item">
                                                         <div class="checkout-contact-item checkout-contact-item-mobile">
                                                             شماره تماس:
-                                                            <span class="mobile-phone">{{ $itemAddress->mobile  }}</span>
+                                                            <span
+                                                                class="mobile-phone">{{ $itemAddress->mobile  }}</span>
                                                         </div>
                                                         <div class="checkout-contact-item-message">
                                                             کد پستی:
-                                                            <span class="post-code"> {{ $itemAddress->postal_code  }}</span>
+                                                            <span
+                                                                class="post-code"> {{ $itemAddress->postal_code  }}</span>
                                                         </div>
                                                         <br>
                                                         استان
-                                                        <span class="state">{{ $itemAddress->province->name }}</span>
+                                                        <span class="state">{{ $itemAddress->city->province->name }}</span>
                                                         ، ‌شهر
                                                         <span class="city">{{ $itemAddress->city->name }}</span>
                                                         ،
-                                                        <span class="address-part">{{ $itemAddress->fullAddress }}</span>
+                                                        <span
+                                                            class="address-part">{{ $itemAddress->full_address }}</span>
                                                     </li>
                                                 </ul>
                                                 <div class="checkout-contact-badge">
@@ -65,32 +68,34 @@
                                         </label>
                                     </div>
                                 @endforeach
+                            @else
+                                <span>برای ارسال سفارش آدرس مقصد را اضافه نمایید</span>
                             @endif
-                            @if(isset($basket) && !empty($basket) && isset($basket->items))
+
+                            @if(isset($basket) && !empty($basket))
                                 <form method="post" id="shipping-data-form">
                                     <div class="headline">
-                                        <span>{{ $basket->totalQty }} کالا در سبد خرید  </span>
                                     </div>
                                     <div class="checkout-pack">
                                         <section class="products-compact">
                                             <div class="box">
                                                 <div class="row">
-                                                    @foreach($basket->items as $items)
-                                                        @php
-                                                            $findVariation = \App\Utility\Variation::findVariation($items['item']->variation_id);
-                                                        @endphp
-                                                        <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                                                            <div class="product-box-container">
-                                                                <div class="product-box product-box-compact">
-                                                                    <a class="product-box-img" href="{{ $findVariation->product->path() }}">
-                                                                        <img src="{{ $items['item']->image }}" alt="{{ $items['item']->title }}">
-                                                                    </a>
-                                                                    <div class="product-box-title">
-                                                                        {{ $items['item']->title }}
+                                                    @foreach($basket as $item)
+                                                        @if(is_array($item))
+                                                            <div class="col-lg-3 col-md-4 col-sm-6 col-12">
+                                                                <div class="product-box-container">
+                                                                    <div class="product-box product-box-compact">
+                                                                        <a class="product-box-img">
+                                                                            <img src="{{ $item['image'] }}"
+                                                                                 alt="{{ $item['name'] }}">
+                                                                        </a>
+                                                                        <div class="product-box-title">
+                                                                            {{ $item['name'] }}
+                                                                        </div>
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                        </div>
+                                                        @endif
                                                     @endforeach
                                                 </div>
                                             </div>
@@ -107,50 +112,4 @@
     </div>
 @endsection
 
-@section('site-js')
-    {{-- choose address --}}
-    <script>
-        $('input[type="radio"]').change(function () {
-            if ($(this).is(':checked')) {
-                var address = $(this).attr('data-attr');
-                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
-                $.ajax({
-                    type: "post",
-                    url: "{{route('site.basket.address.check')}}",
-                    data: {
-                        address: address,
-                        _token: CSRF_TOKEN
-                    },
-                    success: function (data) {
-                        if (data.status == 200) {
-                            var address_get_session = data.message.fullAddress;
-                            $('.address-session-get').html(address_get_session);
-                        }
-                        console.log(data);
-                        if (data.status == 100) {
-
-                            Swal.fire({
-                                title: "خطا!",
-                                text: data.message,
-                                icon: "error",
-                                showCancelButton: false,
-                                closeOnConfirm: false,
-                                showLoaderOnConfirm: false,
-                                confirmButtonClass: "btn-danger",
-                                confirmButtonText: "بستن",
-                            }).then(function () {
-                                location.reload();
-                            });
-                        }
-                        //$(".cart").load(" .cart > *");
-                    },
-                    error: function (error) {
-                        //alert(error);
-                        alert("لطفا چند لحظه دیگر وارد شوید.");
-                    }
-                });
-            }
-        });
-    </script>
-@endsection
 

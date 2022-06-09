@@ -1,10 +1,10 @@
-@extends('site.layout.master')
-@section('site.css')
+@extends('site.layouts.master')
+@section('site-css')
     @include('users.layouts.partials.styles')
 @endsection
 @section('content')
     <main class="profile-user-page default">
-        <div class="container">
+        <div class="container wrapper default">
             <div class="row">
                 <div class="profile-page col-xl-9 col-lg-8 col-md-12 order-2">
                     <div class="row">
@@ -46,11 +46,11 @@
                                                                             </div>
                                                                             <br>
                                                                             استان
-                                                                            <span class="state">{{ $itemAddress->province->name }}</span>
+                                                                            <span class="state">{{ $itemAddress->city->province->name }}</span>
                                                                             ، ‌شهر
                                                                             <span class="city">{{ $itemAddress->city->name }}</span>
                                                                             ،
-                                                                            <span class="address-part">{{ $itemAddress->fullAddress }}</span>
+                                                                            <span class="address-part">{{ $itemAddress->full_address }}</span>
                                                                         </li>
                                                                     </ul>
                                                                     <div class="checkout-contact-badge">
@@ -97,7 +97,7 @@
                                             <div class="form-account-title">آدرس تکمیلی</div>
                                             <div class="form-account-row">
                                                 <input class="input-field text-right" type="text" placeholder="آدرس"
-                                                       name="fullAddress" onkeypress="text(this)" onchange="text(this)"
+                                                       name="full_address" onkeypress="text(this)" onchange="text(this)"
                                                        keyup="text(this)" keydown="text(this)" value=""></div>
                                         </div>
                                         <div class="col-sm-12 col-md-6">

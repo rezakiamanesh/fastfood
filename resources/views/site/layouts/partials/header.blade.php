@@ -306,8 +306,14 @@
             <div class="col-12 p-0 menu">
                 <nav class="navbar navbar-expand-md navbar-dark gap-col ">
                     <div class="collapse navbar-collapse js-navbar-collapse">
-                        @if(isset($categories) && !empty($categories))
-                            <ul class="nav navbar-nav mr-auto col-lg-5 p-0">
+
+                        <ul class="nav navbar-nav mr-auto col-lg-5 p-0">
+                            <li class="nav-item  tab-menu all-categori">
+                                <a href="{{ route('site.index') }}" class="nav-link active">
+                                    صفحه نخست
+                                </a>
+                            </li>
+                            @if(isset($categories) && !empty($categories))
                                 @foreach($categories as $item)
                                     <li class="nav-item mega-dropdown dropdown tab-menu all-categori">
                                         <a href="{{ $item->path() }}" class="nav-link dropdown-toggle active"
@@ -331,7 +337,7 @@
                                                             src="{{ $itemCategory->image[0]->url }}"
                                                             alt="{{ $itemCategory->title }}"
                                                             class="img2">
-                                                        @endif
+                                                    @endif
                                                                                                                                                             </span>
                                                                 <span>{{ $itemCategory->title }}</span>
                                                             </a>
@@ -342,8 +348,9 @@
                                         @endif
                                     </li>
                                 @endforeach
-                            </ul>
-                        @endif
+                            @endif
+                        </ul>
+
                         <div class="logo-fixed mr-auto ml-auto d-none">
                             <a href="/">
                                 <img alt="فود با مزه"
@@ -363,8 +370,9 @@
                                          <span class="img-reg icon-slice"></span>
                                      </a>
                                  @else
-                                     <span><a href="{{ route('panel.dashboard.index') }}"
-                                              class="login">ناحیه کاربری</a></span>
+                                     <span><a
+                                             href="{{ auth()->user()->isAdmin() ? route('panel.dashboard.index') : route('users.dashboard.index') }}"
+                                             class="login">ناحیه کاربری</a></span>
                                      <span class="gap"></span>
                                      <span class="reg"><a
                                              href="{{ route('logout') }}">خروج</a></span>
@@ -378,7 +386,7 @@
                                 <i class="fas fa-angle-down"></i>
                              </span>
                             <span class="shop">
-                                      <a href="https://foodbamaze.com/public/index.php/orders/basket">
+                                      <a href="{{ route('site.basket') }}">
                                           <span class="img-shop icon-slice"></span>
                                           <span class="text-shop">سبد خرید</span>
                                       </a>

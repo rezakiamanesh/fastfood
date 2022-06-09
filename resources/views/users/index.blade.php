@@ -1,11 +1,11 @@
-@extends('layouts.master')
+@extends('site.layouts.master')
 @section('site-css')
     @include('users.layouts.partials.styles')
 @endsection
 
 @section('content')
     <main class="profile-user-page default">
-        <div class="container">
+        <div class="container wrapper default">
             <div class="row">
                 <div class="profile-page col-xl-9 col-lg-8 col-md-12 order-2">
                     <div class="row">
@@ -18,7 +18,7 @@
                                     <div class="col-sm-12 col-md-6">
                                         <p>
                                             <span class="title">نام و نام خانوادگی :</span>
-                                            <span>{{ $user->fullName }}</span>
+                                            <span>{{ $user->name }}</span>
                                         </p>
                                     </div>
                                     <div class="col-sm-12 col-md-6">

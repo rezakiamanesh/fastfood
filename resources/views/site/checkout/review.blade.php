@@ -1,19 +1,19 @@
-@extends('site.layout.master')
-@section('site.css')
+@extends('site.layouts.master')
+@section('site-css')
     @include('users.layouts.partials.styles')
 @endsection
 
 @section('content')
     @php
         $finish = 0;
-        $nextUrl = route('site.basket.finish');
+        $nextUrl = route('site.basketStore');
     @endphp
     <div class="wrapper default shopping-page">
         <main class="cart-page default">
             <div class="container">
                 <div class="row pb-5">
                     <div class="col-xl-9 col-lg-8 col-md-12">
-                        @if(isset($basket) && !empty($basket) && isset($basket->items))
+                        @if(isset($basket) && !empty($basket))
                             <div class="cart-page-content">
                                 @include('generals.allErrors')
                                 <div class="cart-page-title">
@@ -22,29 +22,29 @@
                                 <div class="table-responsive checkout-content default">
                                     <table class="table">
                                         <tbody>
-                                        @foreach($basket->items as $items)
-                                            @php
-                                                $findVariation = \App\Utility\Variation::findVariation($items['item']->variation_id);
-                                            @endphp
-                                            <tr class="checkout-item">
-                                                <td>
-                                                    <img src="{{ $items['item']->image }}"
-                                                         alt="{{ $items['item']->title }}">
-                                                </td>
-                                                <td>
-                                                    <h3 class="checkout-title">
-                                                        {{ $items['item']->title }}
-                                                    </h3>
-                                                </td>
-                                                <td>{{ $items['qty'] }} عدد</td>
-                                                <td>
-                                                    @if(is_null($items['item']->discountPrice) || empty($items['item']->discountPrice) || $items['item']->discountPrice == null || auth()->user()->isColleague())
-                                                        {{ \App\Utility\unit::unit($items['item']->price)  }}
-                                                    @else
-                                                        {{ \App\Utility\unit::unit($items['item']->discountPrice)  }}
-                                                    @endif
-                                                </td>
-                                            </tr>
+                                        @foreach($basket as $item)
+                                            @if(is_array($item))
+                                                <tr class="checkout-item">
+                                                    <td>
+                                                        <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}">
+                                                    </td>
+                                                    <td>
+                                                        <h3 class="checkout-title">
+                                                            {{ $item['name'] }}
+                                                        </h3>
+                                                    </td>
+                                                    <td>{{ $item['quantity'] }} عدد</td>
+                                                    <td>
+                                                        {{ number_format($item['price']) }}
+                                                    </td>
+                                                    {{--                                        <td class="text-center">--}}
+                                                    {{--                                            <button type="button" data-attr-add="{{$items['item']->variation_id}}"--}}
+                                                    {{--                                               class="dk-btn-basket dk-btn-success addProduct">+</button>--}}
+                                                    {{--                                            <button type="button" data-attr-min="{{$items['item']->variation_id}}"--}}
+                                                    {{--                                               class="dk-btn-basket dk-btn-danger minProduct">-</button>--}}
+                                                    {{--                                        </td>--}}
+                                                </tr>
+                                            @endif
                                         @endforeach
                                         </tbody>
                                     </table>
@@ -71,7 +71,8 @@
                                                     </div>
                                                     <div class="checkout-contact-item-message">
                                                         کد پستی:
-                                                        <span class="post-code"> {{ $sessionAddress->postal_code  }}</span>
+                                                        <span
+                                                            class="post-code"> {{ $sessionAddress->postal_code  }}</span>
                                                     </div>
                                                     <br>
                                                     استان
@@ -91,7 +92,7 @@
                             </div>
                         @endif
                         <div class="row">
-                            <div class="col-md-6 p-0 pl-md-3 cart-page-content">
+                            <div class="col-md-12 p-0 pl-md-3 cart-page-content">
                                 <div class="cart-page-title">
                                     <h1>انتخاب شیوه پرداخت</h1>
                                 </div>
@@ -100,7 +101,7 @@
                                 </section>
                             </div>
                             <div class="col-md-6 p-0 pr-md-3  cart-page-content">
-                                @include('site.checkout.partials.shipping-methods')
+{{--                                @include('site.checkout.partials.shipping-methods')--}}
                             </div>
                         </div>
                     </div>

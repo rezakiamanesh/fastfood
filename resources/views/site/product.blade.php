@@ -21,7 +21,7 @@
     </script>
     <script>
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $(".reply").click(function () {
                 var reply = $(this);
                 var id = reply.attr('sub_id');
@@ -41,17 +41,17 @@
                     items: 1,
                     slideSpeed: 2000,
                     nav: true,
-                    margin:1,
+                    margin: 1,
                     autoplay: false,
                     dots: false,
-                    rtl:true,
+                    rtl: true,
                     loop: true,
                     responsiveRefreshRate: 200,
-                    navText: ["<i class='fas fa-angle-left'></i>","<i class='fas fa-angle-right'></i>"]
+                    navText: ["<i class='fas fa-angle-left'></i>", "<i class='fas fa-angle-right'></i>"]
                 })
                 .on("changed.owl.carousel", syncPosition);
             thumbs
-                .on("initialized.owl.carousel", function() {
+                .on("initialized.owl.carousel", function () {
                     thumbs
                         .find(".owl-item")
                         .eq(0)
@@ -60,8 +60,8 @@
                 .owlCarousel({
                     items: 5,
                     dots: true,
-                    margin:10,
-                    rtl:true,
+                    margin: 10,
+                    rtl: true,
                     nav: true,
                     navText: [
                         '<i class="fas fa-chevron-left"></i>',
@@ -73,6 +73,7 @@
                     responsiveRefreshRate: 100
                 })
                 .on("changed.owl.carousel", syncPosition2);
+
             function syncPosition(el) {
                 //if loop is set to false, then you have to uncomment the next line
                 //var current = el.item.index;
@@ -107,13 +108,15 @@
                     thumbs.data("owl.carousel").to(current - onscreen, 100, true);
                 }
             }
+
             function syncPosition2(el) {
                 if (syncedSecondary) {
                     var number = el.item.index;
                     bigimage.data("owl.carousel").to(number, 100, true);
                 }
             }
-            thumbs.on("click", ".owl-item", function(e) {
+
+            thumbs.on("click", ".owl-item", function (e) {
                 e.preventDefault();
                 var number = $(this).index();
                 bigimage.data("owl.carousel").to(number, 300, true);
@@ -270,17 +273,28 @@
                                                                 </p>
                                                             </div>
                                                         </li>
-
-                                                        <li>
-                                                            <div class="c-add-to-card">
-                                         <span
-                                             class="btn-add-to-cart js-add-to-cart js-btn-add-to-cart   button-card "
-                                             product_id="1132" quantity="1" variant_id="63">
-                                        <span class="icons"><i class="fas fa-cart-plus"></i></span>
-                                        <span
-                                            class="btn-add-to-cart__txt button-card">  افــزودن به سبــد خریــد </span></span>
-                                                            </div>
-                                                        </li>
+                                                        @if($product->stock > 0)
+                                                            <li>
+                                                                <div class="c-add-to-card">
+                                                                    <a href="{{ route('site.addToBasket', $product->id) }}"
+                                                                       class="btn-add-to-cart js-add-to-cart js-btn-add-to-cart   button-card ">
+                                                                        <span class="icons"><i
+                                                                                class="fas fa-cart-plus"></i></span>
+                                                                        <span
+                                                                            class="btn-add-to-cart__txt button-card">  افــزودن به سبــد خریــد </span></a>
+                                                                </div>
+                                                            </li>
+                                                            @else
+                                                            <li>
+                                                                <div class="c-add-to-card">
+                                                                    <span class="btn-add-to-cart js-add-to-cart js-btn-add-to-cart   button-card ">
+                                                                        <span class="icons"><i
+                                                                                class="fas fa-cart-plus"></i></span>
+                                                                        <span
+                                                                            class="btn-add-to-cart__txt button-card">به اتمام رسید</span></span>
+                                                                </div>
+                                                            </li>
+                                                        @endif
                                                     </ul>
                                                 </div>
                                             </div>
