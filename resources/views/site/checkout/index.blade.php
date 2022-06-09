@@ -9,7 +9,7 @@
         $finish = 0;
         $nextUrl = route('site.address');
     @endphp
-    <main class="cart-page default">
+    <main class="cart-page default" xmlns:wire="http://www.w3.org/1999/xhtml">
         <div class="container">
             <div class="row pb-5">
                 <div class="col-xl-9 col-lg-8 col-md-12">
@@ -18,38 +18,7 @@
                             <div class="cart-page-title">
                                 <h1>سبد خرید</h1>
                             </div>
-                            <div class="table-responsive checkout-content default">
-                                <table class="table">
-                                    <tbody>
-                                    @foreach($basket as $item)
-                                        @if(is_array($item))
-                                            <tr class="checkout-item">
-                                                <td>
-                                                    <img src="{{ $item['image'] }}" alt="{{ $item['name'] }}">
-                                                </td>
-                                                <td>
-                                                    <h3 class="checkout-title">
-                                                        {{ $item['name'] }}
-                                                    </h3>
-                                                </td>
-                                                <td>{{ $item['quantity'] }} عدد</td>
-                                                <td>
-                                                    {{ number_format($item['price']) }}
-                                                </td>
-                                                {{--                                        <td class="text-center">--}}
-                                                {{--                                            <button type="button" data-attr-add="{{$items['item']->variation_id}}"--}}
-                                                {{--                                               class="dk-btn-basket dk-btn-success addProduct">+</button>--}}
-                                                {{--                                            <button type="button" data-attr-min="{{$items['item']->variation_id}}"--}}
-                                                {{--                                               class="dk-btn-basket dk-btn-danger minProduct">-</button>--}}
-                                                {{--                                        </td>--}}
-                                            </tr>
-                                        @endif
-                                    @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            {{--                        <div class="row">--}}
-                            {{--                        </div>--}}
+                            <livewire:basket :basket="$basket">
                         </div>
                         <div class="cart-page-content col-xl-12 col-lg-8 col-md-12 order-1">
                             <div class="checkout-price-options">
